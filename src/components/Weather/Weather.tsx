@@ -9,6 +9,7 @@ import ErrorCity from "../Error/ErrorCity";
 
 const API_KEY = "b4fdfbac8dbd3c563adf3bd5f71d6d3a";
 
+// نوع دقیق داده‌های آب و هوا
 interface WeatherData {
   name: string;
   main: {
@@ -23,9 +24,26 @@ interface WeatherData {
   };
 }
 
+// مقدار اولیه امن
+const initialWeather: WeatherData = {
+  name: "",
+  main: {
+    temp: 0,
+    humidity: 0,
+  },
+  weather: [
+    {
+      description: "",
+    },
+  ],
+  wind: {
+    speed: 0,
+  },
+};
+
 export default function Weather() {
   const [city, setCity] = useState<string>("");
-  const [weather, setWeather] = useState<WeatherData | undefined>(undefined);
+  const [weather, setWeather] = useState<WeatherData>(initialWeather);
   const [error, setError] = useState<boolean>(false);
 
   const getWeather = async () => {
@@ -42,7 +60,7 @@ export default function Weather() {
         }
       );
       setWeather(current);
-      setError(false);
+      setError(false); // ریست کردن خطا
     } catch (err) {
       console.error(err);
       setError(true);
@@ -66,17 +84,17 @@ export default function Weather() {
             <Button onClick={getWeather}>Search</Button>
           </div>
 
-          {weather && (
-            <Card
-              city={weather.name}
-              temp={weather.main.temp}
-              description={weather.weather[0].description}
-              wind={weather.wind.speed}
-              humidity={weather.main.humidity}
-            />
-          )}
+          {/* کارت آب و هوا */}
+          <Card
+            city={weather.name}
+            temp={weather.main.temp}
+            description={weather.weather[0].description}
+            wind={weather.wind.speed}
+            humidity={weather.main.humidity}
+          />
         </div>
       </div>
+
       {error && <ErrorCity />}
     </>
   );
