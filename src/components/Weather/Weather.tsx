@@ -25,7 +25,7 @@ interface WeatherData {
 
 export default function Weather() {
   const [city, setCity] = useState<string>("");
-  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [weather, setWeather] = useState<WeatherData | undefined>(undefined);
   const [error, setError] = useState<boolean>(false);
 
   const getWeather = async () => {
