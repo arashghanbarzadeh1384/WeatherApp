@@ -7,9 +7,10 @@ interface WeatherData {
 
 interface VideoWeatherProps {
   weather: WeatherData;
+  className?: string; 
 }
 
-export default function VideoWeather({ weather }: VideoWeatherProps) {
+export default function VideoWeather({ weather, className }: VideoWeatherProps) {
   const getVideo = () => {
     const condition = weather?.weather[0]?.main?.toLowerCase();
     if (!condition) return null;
@@ -34,7 +35,7 @@ export default function VideoWeather({ weather }: VideoWeatherProps) {
             autoPlay
             loop
             muted
-            className="absolute inset-0 w-full h-full object-cover z-0"
+            className={className ?? "absolute inset-0 w-full h-full object-cover z-0"} // استفاده از className
           >
             <source src={videoSrc} type="video/mp4" />
           </video>
