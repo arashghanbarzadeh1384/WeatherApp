@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* برای IE و Edge */
+  scrollbar-width: none; /* برای Firefox */
+}
+
+
+body {
+  background-image: url("../../public/Images/file-20220126-17-1i0g402.jpg");
+  /* background-position: center; */
+}
