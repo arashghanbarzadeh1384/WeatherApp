@@ -4,12 +4,11 @@ import { useState } from "react";
 import Input from "../Search";
 import Button from "../Button/Button";
 import Card from "../Card/Card";
-import VideoWeather from "../VideoWeather/VideoWeather";
 import ErrorCity from "../Error/ErrorCity";
+import VideoWeather from "../VideoWeather/VideoWeather";
 
 const API_KEY = "b4fdfbac8dbd3c563adf3bd5f71d6d3a";
 
-// نوع دقیق داده‌های آب و هوا
 interface WeatherData {
   name: string;
   main: {
@@ -17,6 +16,7 @@ interface WeatherData {
     humidity: number;
   };
   weather: {
+    main: string;
     description: string;
   }[];
   wind: {
@@ -24,7 +24,6 @@ interface WeatherData {
   };
 }
 
-// مقدار اولیه امن
 const initialWeather: WeatherData = {
   name: "",
   main: {
@@ -33,6 +32,7 @@ const initialWeather: WeatherData = {
   },
   weather: [
     {
+      main: "",
       description: "",
     },
   ],
@@ -60,7 +60,7 @@ export default function Weather() {
         }
       );
       setWeather(current);
-      setError(false); // ریست کردن خطا
+      setError(false);
     } catch (err) {
       console.error(err);
       setError(true);
@@ -84,7 +84,6 @@ export default function Weather() {
             <Button onClick={getWeather}>Search</Button>
           </div>
 
-          {/* کارت آب و هوا */}
           <Card
             city={weather.name}
             temp={weather.main.temp}

@@ -1,34 +1,33 @@
-type WeatherData = {
+interface WeatherData {
   weather: {
     main: string;
+    description: string;
   }[];
-};
+}
 
 interface VideoWeatherProps {
-  weather?: WeatherData;
+  weather: WeatherData;
 }
 
 export default function VideoWeather({ weather }: VideoWeatherProps) {
   const getVideo = () => {
-    if (!weather) return;
-
-    const condition = weather.weather[0].main.toLowerCase();
-    
+    const condition = weather?.weather[0]?.main?.toLowerCase();
+    if (!condition) return null;
 
     if (condition.includes("cloud")) return "/videos/clouds.mp4";
     if (condition.includes("rain")) return "/videos/rain.mp4";
     if (condition.includes("snow")) return "/videos/snow.mp4";
     if (condition.includes("thunderstorm")) return "/videos/thunderstorm.mp4";
-    if (condition.includes("haze") || condition.includes("fog"))
-      return "/videos/haze.mp4";
+    if (condition.includes("haze") || condition.includes("fog")) return "/videos/haze.mp4";
     if (condition.includes("clear")) return "/videos/clear.mp4";
+    return null;
   };
 
   const videoSrc = getVideo();
 
   return (
     <>
-      {weather && videoSrc && (
+      {videoSrc && (
         <>
           <video
             key={videoSrc}
