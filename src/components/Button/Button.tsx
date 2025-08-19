@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
       className="relative cursor-pointer py-2 px-5 text-center font-barlow inline-flex justify-center text-base uppercase text-black rounded-lg border-solid transition-transform duration-300 ease-in-out group outline-offset-4 focus:outline focus:outline-2 focus:outline-black focus:outline-offset-4 overflow-hidden"
     >
