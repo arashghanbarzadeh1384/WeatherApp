@@ -1,4 +1,5 @@
 "use client";
+
 import axios from "axios";
 import { useState } from "react";
 import Input from "../Search";
@@ -30,6 +31,7 @@ export default function Weather() {
   const [error, setError] = useState<boolean>(false);
 
   const getWeather = async () => {
+    if (!city.trim()) return;
     try {
       const { data: current } = await axios.get<WeatherData>(
         "https://api.openweathermap.org/data/2.5/weather",
@@ -52,64 +54,61 @@ export default function Weather() {
     }
   };
 
-  const activeCity =
-    weathers.length > 0 ? weathers[weathers.length - 1].name : "";
+  const activeCity = weathers.length > 0 ? weathers[weathers.length - 1].name : "";
 
   return (
-    <>
-      <div className="relative w-full min-h-screen overflow-hidden flex flex-col items-center justify-start md:justify-center">
-        {weathers.length > 0 && (
-          <VideoWeather
-            weather={weathers[weathers.length - 1]}
-            className="absolute inset-0 w-full h-full object-cover -z-10"
-          />
-        )}
+    <div className="relative w-full min-h-screen bg-white/5 flex flex-col items-center">
+      {weathers.length > 0 && (
+        <VideoWeather
+          weather={weathers[weathers.length - 1]}
+          className="absolute inset-0 w-full h-full object-cover -z-10"
+        />
+      )}
 
-        {activeCity && (
-          <div className="absolute top-5 left-5 z-30">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg uppercase">
-              {activeCity}
-            </h2>
+      <header className="w-full max-w-6xl px-4 py-5 z-20">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="text-center sm:text-left">
+            <h1 className="text-2xl md:text-5xl font-bold text-white">Weather App 🌦️</h1>
           </div>
-        )}
 
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 mt-2.5 relative z-20 text-black text-center">
-          Weather App 🌦️
-        </h1>
-
-        <div className="relative z-20 flex flex-col w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:justify-end gap-2 mb-6">
+          <div className="w-full sm:w-auto flex items-center gap-2">
             <Input
               text="Enter city..."
               value={city}
               onChange={(e) => setCity(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  getWeather();
-                }
+                if (e.key === "Enter") getWeather();
               }}
             />
+
             <Button onClick={getWeather}>Search</Button>
           </div>
-
-          <div className="flex-1 overflow-y-auto scrollbar-hide">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pb-10">
-              {weathers.map((w, idx) => (
-                <Card
-                  key={idx}
-                  city={w.name}
-                  temp={w.main.temp}
-                  description={w.weather[0].description}
-                  wind={w.wind.speed}
-                  humidity={w.main.humidity}
-                />
-              ))}
-            </div>
-          </div>
         </div>
-      </div>
+      </header>
+
+      {activeCity && (
+        <div className="w-full max-w-6xl px-4 mt-4 z-20">
+          <h2 className="text-xl md:text-4xl font-semibold text-white">{activeCity}</h2>
+        </div>
+      )}
+
+      {/* Cards grid: responsive with minimal styling changes */}
+      <main className="w-full flex-1 max-w-6xl px-4 py-6 z-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {weathers.map((w, idx) => (
+            <Card
+              key={idx}
+              city={w.name}
+              temp={w.main.temp}
+              description={w.weather[0].description}
+              wind={w.wind.speed}
+              humidity={w.main.humidity}
+            />
+          ))}
+        </div>
+      </main>
 
       {error && <ErrorCity />}
-    </>
+    </div>
   );
 }
