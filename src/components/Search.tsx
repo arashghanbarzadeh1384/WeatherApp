@@ -10,7 +10,7 @@ type InputProps = {
 const Input: React.FC<InputProps> = ({ text, value, onChange, onKeyDown }) => {
   return (
     <div className="flex items-center bg-zinc-800 border border-zinc-700 text-white rounded-[5px] shadow text-sm w-fit">
-      <div aria-disabled="true" className="w-10 grid place-content-center"></div>
+      <div aria-disabled="true" className="w-8 sm:w-10 grid place-content-center"></div>
       <input
         type="text"
         spellCheck="false"
@@ -18,9 +18,9 @@ const Input: React.FC<InputProps> = ({ text, value, onChange, onKeyDown }) => {
         value={value}
         onChange={onChange}
         onKeyDown={onKeyDown} 
-        className={`bg-transparent py-1.5 outline-none placeholder:text-zinc-400 transition-all duration-300 ${
-          value ? "w-64" : "w-40 focus:w-64"
-        }`}
+        className={`bg-transparent py-1.5 sm:py-2 outline-none placeholder:text-zinc-400 transition-all duration-300 
+          ${value ? "w-36 sm:w-48 md:w-56 lg:w-64" : "w-28 sm:w-40 md:w-48 lg:w-64 focus:w-64"} 
+          sm:text-sm md:text-base lg:text-lg`}
       />
     </div>
   );

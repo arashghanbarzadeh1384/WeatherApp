@@ -57,7 +57,7 @@ export default function Weather() {
 
   return (
     <>
-      <div className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center">
+      <div className="relative w-full min-h-screen overflow-hidden flex flex-col items-center justify-start md:justify-center">
         {weathers.length > 0 && (
           <VideoWeather
             weather={weathers[weathers.length - 1]}
@@ -67,18 +67,18 @@ export default function Weather() {
 
         {activeCity && (
           <div className="absolute top-5 left-5 z-30">
-            <h2 className="text-4xl md:text-6xl font-extrabold text-white drop-shadow-lg uppercase">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg uppercase">
               {activeCity}
             </h2>
           </div>
         )}
 
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 mt-2.5 relative z-20 text-black">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 mt-2.5 relative z-20 text-black text-center">
           Weather App 🌦️
         </h1>
 
-        <div className="relative z-20 flex flex-col w-full h-full">
-          <div className="flex absolute right-5 top-0 gap-2">
+        <div className="relative z-20 flex flex-col w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:justify-end gap-2 mb-6">
             <Input
               text="Enter city..."
               value={city}
@@ -89,12 +89,11 @@ export default function Weather() {
                 }
               }}
             />
-
             <Button onClick={getWeather}>Search</Button>
           </div>
 
-          <div className="mt-28 px-6 flex-1 overflow-y-auto scrollbar-hide">
-            <div className="mt-11 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pb-10">
+          <div className="flex-1 overflow-y-auto scrollbar-hide">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pb-10">
               {weathers.map((w, idx) => (
                 <Card
                   key={idx}
